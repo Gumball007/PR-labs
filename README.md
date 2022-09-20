@@ -10,7 +10,7 @@
 
 :trollface:  This repository contains laboratory works for **PR**.
 
-:grey_exclamation:  Teacher [**Vdovicenco Alexandr**](https://github.com/ASV44).
+:exclamation:  Teacher [**Vdovicenco Alexandr**](https://github.com/ASV44).
 
 ## Labs
 
