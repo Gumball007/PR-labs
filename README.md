@@ -14,7 +14,7 @@
 
 ## Labs
 
-:heavy_check_mark: Laboratory work 1
+[:no_entry: Laboratory work 1](https://github.com/Gumball007/PR-labs/tree/main/lab1)
 
 ## Contact
 
