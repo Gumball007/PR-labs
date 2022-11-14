@@ -1,23 +1,19 @@
 import threading
 import requests
-from flask import Flask, request
+from flask import Flask
 import time
-import random
 
-# https://stackoverflow.com/questions/14888799/disable-console-messages-in-flask-server
 
 import logging
 log = logging.getLogger('werkzeug')
 log.setLevel(logging.ERROR)
 
-# DISABLE POST DEBUGGING
 
 uncooked = "uncooked"
 cooked = "cooked"
 potato_emoji = "🥔"
 fries_emoji = "🍟"
 
-# https://gist.github.com/rene-d/9e584a7dd2935d0f461904b9f2950007
 
 class Colors:
     """ ANSI color codes """
@@ -46,13 +42,15 @@ class Colors:
     CROSSED = "\033[9m"
     END = "\033[0m"
 
+
 server1 = Flask(__name__)
 
 @server1.route('/producer', methods=['POST'])
 def producer():
     return "Success"
 
-# https://realpython.com/intro-to-python-threading/
+semaphore = threading.Semaphore()
+
 
 class Worker(threading.Thread):
     def __init__(self, thread_name):
@@ -61,20 +59,22 @@ class Worker(threading.Thread):
 
     def run(self):
         while True:
-            new_potato = list([potato_emoji, uncooked, str(random.randint(100, 999))])
+            new_potato = list([potato_emoji, uncooked, "aggregate"])
 
             try:
-                requests.post(url='http://localhost:5002/consumer', json={"data" : new_potato})
+                # semaphore.acquire()
+                requests.post(url='http://localhost:5020/aggregator', json={"data" : new_potato})
+                # semaphore.release()
                 print(f'Thread -- {Colors.YELLOW}{self.thread_name}{Colors.END} -- sent [{new_potato[0]} {Colors.LIGHT_RED}{new_potato[1]}{Colors.END}] {new_potato[2]}')
 
             except requests.exceptions.ConnectionError:
-                print ("Consumer server is not up...")
+                print ("Aggregator server is not up...")
 
             time.sleep(2)
 
 if __name__ == '__main__':
 
-    threading.Thread(target=lambda: server1.run(port=5001, host="0.0.0.0", debug=False)).start()
+    threading.Thread(target=lambda: server1.run(port=5010, host="0.0.0.0", debug=False)).start()
 
     for index in range(1, 6):
         x = Worker(thread_name=f'Worker_{index}')
