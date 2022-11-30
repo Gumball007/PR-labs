@@ -18,6 +18,8 @@
 
 [:white_check_mark: Laboratory work 2](https://github.com/Gumball007/PR-labs/tree/main/lab2)
 
+[:white_check_mark: Laboratory work 3](https://github.com/Gumball007/PR-labs/tree/main/lab3)
+
 ## Contact
 
 :mailbox:  My email: `ana.coroletchi@isa.utm.md`
